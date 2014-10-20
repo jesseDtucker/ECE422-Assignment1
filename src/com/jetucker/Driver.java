@@ -25,7 +25,7 @@ public final class Driver
 
     public static void main(String[] args)
     {
-        if(GetInputParams(args))
+        if(GetInput(args))
         {
             // first delete the output file if it exists
             if(s_outputFile.exists() && s_outputFile.delete())
@@ -133,7 +133,7 @@ public final class Driver
         return results;
     }
 
-    private static boolean GetInputParams(String[] args)
+    private static boolean GetInput(String[] args)
     {
         boolean result = true;
 
