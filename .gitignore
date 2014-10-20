@@ -45,3 +45,6 @@ Temporary Items
 .idea
 *.class
 *.dll
+*.obj
+*.lib
+*.exp

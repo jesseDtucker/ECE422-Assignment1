@@ -36,7 +36,7 @@ public final class Driver
             // get input
             int[] input = GetInput();
             System.out.println("Starting Java sort...");
-            if(TrySort(input, s_javaSorter, s_javaFailureProbability) && false)
+            if(TrySort(input, s_javaSorter, s_javaFailureProbability))
             {
                 System.out.println("Java sort completed successfully");
                 OutputResults(input);

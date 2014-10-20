@@ -7,6 +7,7 @@ public final class HeapSorter implements ISortVarient
 {
     private int[] m_heap = null;
     private int m_heapSize = 0;
+    private int m_memoryAccesses = 0;
 
     public String GetName()
     {
@@ -17,11 +18,14 @@ public final class HeapSorter implements ISortVarient
     {
         m_heap = new int[items.length];
         IntStream intStream = Arrays.stream(items);
+        m_memoryAccesses += 3;
 
         // first take each element in the array and insert it into the heap
         intStream.forEach(this::InsertIntoHeap);
+        m_memoryAccesses += m_heapSize;
 
         // now remove each element from the heap placing it back into the array
+        m_memoryAccesses += m_heapSize;
         while(m_heapSize > 0)
         {
             items[m_heapSize - 1] = RemoveTopFromHeap();
@@ -35,7 +39,7 @@ public final class HeapSorter implements ISortVarient
 
     public int GetMemoryAccesses()
     {
-        return 0;
+        return m_memoryAccesses;
     }
 
     private void swap(int i,int j)
@@ -43,6 +47,8 @@ public final class HeapSorter implements ISortVarient
         int temp = m_heap[i];
         m_heap[i] = m_heap[j];
         m_heap[j] = temp;
+
+        m_memoryAccesses += 10;
     }
 
     private void InsertIntoHeap(int val)
@@ -51,18 +57,23 @@ public final class HeapSorter implements ISortVarient
         m_heap[m_heapSize] = val;
         ++m_heapSize;
 
+        m_memoryAccesses += 4;
+
         // now sift up
         int k = m_heapSize - 1;
+        m_memoryAccesses += 2;
         while(k > 0)
         {
             int p = (k-1)/2;
             int item = m_heap[k];
             int parent = m_heap[p];
+            m_memoryAccesses += 10;
             if(item > parent)
             {
                 // then we move it up
                 swap(k, p);
                 k = p;
+                m_memoryAccesses += 1;
             }
             else
             {
@@ -88,23 +99,29 @@ public final class HeapSorter implements ISortVarient
         // now sift down
         int k = 0;
         int lower = 2*k+1;
+        m_memoryAccesses += 6;
         while(lower < m_heapSize)
         {
             int max = lower;
             int r = lower + 1;
+            m_memoryAccesses += 6;
             if(r < m_heapSize)
             {
                 // right child
+                m_memoryAccesses += 3;
                 if(m_heap[r] > m_heap[lower])
                 {
+                    m_memoryAccesses += 1;
                     ++max;
                 }
             }
+            m_memoryAccesses += 3;
             if(m_heap[k] < m_heap[max])
             {
                 swap(k, max);
                 k = max;
                 lower = 2 * k + 1;
+                m_memoryAccesses += 3;
             }
             else
             {

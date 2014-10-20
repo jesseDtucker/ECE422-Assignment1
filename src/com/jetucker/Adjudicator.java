@@ -1,5 +1,7 @@
 package com.jetucker;
 
+import java.util.Random;
+
 public class Adjudicator
 {
     public boolean CheckResults(int[] sortedList, int memoryAccesses, double probabilityOfFailure)
@@ -8,7 +10,9 @@ public class Adjudicator
         result = AcceptanceTest(sortedList);
         if(result)
         {
-            // TODO::JT need to do probablity of failure
+            double testNum = memoryAccesses * probabilityOfFailure;
+            double random = (new Random()).nextDouble();
+            result = !(random > 0.5 && random < (testNum + 0.5));
         }
         return result;
     }
