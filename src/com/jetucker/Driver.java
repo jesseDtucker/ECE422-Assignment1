@@ -44,7 +44,7 @@ public final class Driver
             else
             {
                 System.out.println("Java sort failed, falling back to C sort");
-                File lib = new File("libcom_jetucker_InsertionSorter.dll");
+                File lib = new File("libcom_jetucker_InsertionSorter.so");
                 System.load(lib.getAbsolutePath());
                 s_cSorter = new InsertionSorter();
                 input = GetInput();
