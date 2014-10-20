@@ -55,6 +55,7 @@ public final class Driver
                 else
                 {
                     System.out.println("C sort failed.\n Sort operation failed!");
+                    System.exit(-1);
                 }
             }
         }
